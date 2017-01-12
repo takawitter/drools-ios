@@ -24,3 +24,18 @@ A simple iOS application that runs Drools rule.
 1. Refresh ios-sample
 1. Add the name of classes generated at 2. as the content of pattern tag inside ios-sample/robovm.xml
 1. Run ios-sample as Simulator App or Device App
+
+## How it works
+
+This project realizes running Drools rule on iOS using RoboVM. Two key components have following feature:
+ * Drools has efficient code generation that generates and load bytecode at runtime, even at the time a rule fired. RoboVM needs classes pre-compiled and Drools generates class at run-time.
+ * RoboVM compiles Java bytecodes to iOS native code and support most of Java functions except run-time class definition.
+
+So we need to ..
+ 1. Run Drools beforehand.
+ 2. Get bytecode Drools generated.
+ 1. Pass it to RoboVM to generate iOS native code of rules.
+
+The compile-rule project do that. That project replaces some Drools internal classes to hook Drools bytecode generation and write codes to file. And also serialize Drools classes related to rule session.
+
+
