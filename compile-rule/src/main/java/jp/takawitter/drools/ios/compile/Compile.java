@@ -52,7 +52,7 @@ public class Compile {
 			session.halt();
 			System.out.println("Compilation completed. Run following commands:");
 			System.out.println("cd out; jar cf rules.jar defaultpkg; "
-					+ "cp rules.jar ../../ios-sample/lib/; cp KieBase.cache ../../ios-sample/resources/");
+					+ "cp rules.jar ../../ios-sample/lib/; cp KiePackages.cache ../../ios-sample/resources/");
 		}
 	}
 }
