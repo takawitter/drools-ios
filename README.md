@@ -28,12 +28,12 @@ A simple iOS application that runs Drools rule.
 ## How it works
 
 This project realizes running Drools rule on iOS using RoboVM. Two key components have following feature:
- * Drools has efficient code generation that generates and load bytecode at runtime, even at the time a rule fired. RoboVM needs classes pre-compiled and Drools generates class at run-time.
+ * Drools has efficient code generation that generates and load bytecode at runtime, even at the time a rule fired.
  * RoboVM compiles Java bytecodes to iOS native code and support most of Java functions except run-time class definition.
 
-So we need to ..
+That is, RoboVM needs classes pre-compiled while Drools generates class at run-time. So we need to ..
  1. Run Drools beforehand.
  2. Get bytecode Drools generated.
- 1. Pass it to RoboVM to generate iOS native code of rules.
+ 1. Pass the bytecode to RoboVM to generate iOS native code of rules.
 
-The compile-rule project do 1. and 2. and ios-sample do 3. That projects replaces some Drools internal classes to hook Drools bytecode generation and write codes to file, or prevent run-time class creation that causes crash on iOS.
+The compile-rule project do 1. and 2. and ios-sample do 3. Those projects replaces some Drools internal classes to hook Drools bytecode generation and write codes to file, or prevent run-time class creation that causes crash on iOS.
