@@ -69,6 +69,8 @@ public class RuleImpl implements Externalizable,
                                  InternalRule,
                                  Query {
 
+    static final long serialVersionUID = -851378121223707656L;
+
     private static final int NO_LOOP_BIT =              1 << 0;
     private static final int AUTO_FOCUS_BIT =           1 << 1;
     private static final int LOCK_ON_ACTIVE_BIT =       1 << 2;
