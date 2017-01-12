@@ -36,6 +36,4 @@ So we need to ..
  2. Get bytecode Drools generated.
  1. Pass it to RoboVM to generate iOS native code of rules.
 
-The compile-rule project do that. That project replaces some Drools internal classes to hook Drools bytecode generation and write codes to file. And also serialize Drools classes related to rule session.
-
-
+The compile-rule project do 1. and 2. and ios-sample do 3. That projects replaces some Drools internal classes to hook Drools bytecode generation and write codes to file, or prevent run-time class creation that causes crash on iOS.
