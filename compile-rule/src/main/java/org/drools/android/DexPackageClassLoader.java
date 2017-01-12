@@ -16,10 +16,10 @@
 
 package org.drools.android;
 
-import org.drools.core.rule.JavaDialectRuntimeData;
-import org.kie.internal.utils.FastClassLoader;
+import static org.drools.core.util.ClassUtils.convertClassToResourcePath;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -28,12 +28,14 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
-import static org.drools.core.util.ClassUtils.convertClassToResourcePath;
+import org.drools.core.rule.JavaDialectRuntimeData;
+
+import jp.go.nict.langrid.commons.io.FileUtil;
 
 /**
  * This is an Internal Drools Class
  */
-public class DexPackageClassLoader extends MultiDexClassLoader implements FastClassLoader {
+public class DexPackageClassLoader extends ClassLoader {
 
     protected JavaDialectRuntimeData store;
 
@@ -67,6 +69,16 @@ public class DexPackageClassLoader extends MultiDexClassLoader implements FastCl
         if (cls == null) {
             final byte[] clazzBytes = this.store.read(convertClassToResourcePath(name));
             if (clazzBytes != null) {
+                File f = new File(outDir, name.replaceAll("\\.", "/") + ".class");
+                if(!f.exists()){
+                    System.out.println("DexPackageClassLoader.fastFindClass: " + name);
+                    try {
+                        f.getParentFile().mkdirs();
+                        FileUtil.writeStream(f, new ByteArrayInputStream(clazzBytes));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 String pkgName = name.substring(0,
                         name.lastIndexOf('.'));
 
@@ -80,7 +92,7 @@ public class DexPackageClassLoader extends MultiDexClassLoader implements FastCl
                         existingPackages.add(pkgName);
                     }
                 }
-                cls = super.defineClass(name, clazzBytes);
+                cls = super.defineClass(name, clazzBytes, 0, clazzBytes.length);
             }
 
             if (cls != null) {
@@ -116,4 +128,9 @@ public class DexPackageClassLoader extends MultiDexClassLoader implements FastCl
         };
     }
 
+    public static void setOutDir(File outDir){
+        DexPackageClassLoader.outDir = outDir;
+    }
+
+    private static File outDir = new File("");
 }
