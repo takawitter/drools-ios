@@ -39,7 +39,7 @@ public class Compile {
 			KieBase base = kieServices.newKieContainer(
 					kieServices.getRepository().getDefaultReleaseId())
 					.getKieBase();
-			File f = new File(outDir, "KieBase.cache");
+			File f = new File(outDir, "KiePackages.cache");
 			f.getParentFile().mkdirs();
 			try(OutputStream os = new FileOutputStream(f)){
 				DroolsStreamUtils.streamOut(os, base.getKiePackages());

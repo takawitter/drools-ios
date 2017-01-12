@@ -1,0 +1,30 @@
+<config>
+	<executableName>${app.executable}</executableName>
+	<mainClass>${app.mainclass}</mainClass>
+	<os>ios</os>
+	<target>ios</target>
+	<iosInfoPList>Info.plist.xml</iosInfoPList>
+	<forceLinkClasses>
+		<pattern>android.os.Build</pattern>
+		<pattern>dalvik.system.DexPathList</pattern>
+		<pattern>org.apache.harmony.security.provider.cert.DRLCertFactory</pattern>
+		<pattern>org.apache.harmony.security.provider.crypto.CryptoProvider</pattern>
+		<pattern>org.apache.harmony.security.provider.crypto.SHA1_MessageDigestImpl</pattern>
+		<pattern>org.drools.android.DexPackageClassLoader</pattern>
+		<pattern>org.drools.android.DroolsAndroidContext</pattern>
+		<pattern>org.drools.android.MultiDexClassLoader</pattern>
+		<pattern>org.drools.core.base.accumulators.*</pattern>
+		<pattern>org.drools.core.base.evaluators.*</pattern>
+		<pattern>org.drools.core.impl.KnowledgeBaseFactoryServiceImpl</pattern>
+		<pattern>org.drools.core.io.impl.ByteArrayResource</pattern>
+		<pattern>defaultpkg.Rule_hello1582696380</pattern>
+		<pattern>defaultpkg.Rule_hello1582696380DefaultConsequenceInvoker</pattern>
+		<pattern>defaultpkg.Rule_hello1582696380DefaultConsequenceInvokerGenerated</pattern>
+	</forceLinkClasses>
+
+	<resources>
+		<resource>
+			<directory>resources</directory>
+		</resource>
+	</resources>
+</config>
