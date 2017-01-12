@@ -1,0 +1,6 @@
+rule "hello"
+when
+  $m: String()
+then
+  System.out.println("hello " + $m);
+end
