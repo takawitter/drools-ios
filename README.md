@@ -14,6 +14,7 @@ A simple iOS application that runs Drools rule.
 ## Build your own rule
 
 1. Edit compile-rule/src/main/resources/rule.drl
+2. Add codes to Compile.fireAllRules() method so as all rules to be fired.
 2. Run compile-rule/src/main/java/jp/takawitter/drools/ios/compile/Compile
 3. Open console
 1. > cd path/to/compile-rule
