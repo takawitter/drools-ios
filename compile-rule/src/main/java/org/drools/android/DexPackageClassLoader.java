@@ -23,14 +23,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.drools.core.rule.JavaDialectRuntimeData;
-
-import jp.go.nict.langrid.commons.io.FileUtil;
 
 /**
  * This is an Internal Drools Class
@@ -74,7 +73,7 @@ public class DexPackageClassLoader extends ClassLoader {
                     System.out.println("DexPackageClassLoader.fastFindClass: " + name);
                     try {
                         f.getParentFile().mkdirs();
-                        FileUtil.writeStream(f, new ByteArrayInputStream(clazzBytes));
+                        Files.write(f.toPath(), clazzBytes);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

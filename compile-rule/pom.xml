@@ -16,10 +16,5 @@
 			<artifactId>drools-compiler</artifactId>
 			<version>6.5.0.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.langrid</groupId>
-			<artifactId>jp.go.nict.langrid.commons</artifactId>
-			<version>1.0.8</version>
-		</dependency>
 	</dependencies>
 </project>

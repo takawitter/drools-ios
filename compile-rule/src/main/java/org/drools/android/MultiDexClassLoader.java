@@ -16,15 +16,13 @@
 
 package org.drools.android;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.security.ProtectionDomain;
 
 import org.drools.core.util.ByteArrayClassLoader;
 import org.mvel2.util.MVELClassLoader;
-
-import jp.go.nict.langrid.commons.io.FileUtil;
 
 /**
  * Maintains separate dex files for each defined class.
@@ -40,7 +38,7 @@ public class MultiDexClassLoader extends ClassLoader implements ByteArrayClassLo
             System.out.println("MultiDexClassLoader.define: " + name);
             try {
                 f.getParentFile().mkdirs();
-                FileUtil.writeStream(f, new ByteArrayInputStream(bytes));
+                Files.write(f.toPath(), bytes);
             } catch (IOException e) {
                 e.printStackTrace();
             }
