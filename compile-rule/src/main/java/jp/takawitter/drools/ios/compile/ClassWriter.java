@@ -3,8 +3,9 @@ package jp.takawitter.drools.ios.compile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class ClassWriter {
 	public static void write(String name, byte[] bytecode){
@@ -18,7 +19,7 @@ public class ClassWriter {
 		generatedClasses.add(name);
 	}
 
-	public static List<String> getGeneratedClasses() {
+	public static Collection<String> getGeneratedClasses() {
 		return generatedClasses;
 	}
 
@@ -27,5 +28,5 @@ public class ClassWriter {
 	}
 
 	private static File outDir = new File("");
-	private static List<String> generatedClasses = new ArrayList<>();
+	private static Set<String> generatedClasses = new LinkedHashSet<>();
 }
