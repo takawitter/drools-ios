@@ -16,13 +16,12 @@
 
 package org.drools.android;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.security.ProtectionDomain;
 
 import org.drools.core.util.ByteArrayClassLoader;
 import org.mvel2.util.MVELClassLoader;
+
+import jp.takawitter.drools.ios.compile.ClassWriter;
 
 /**
  * Maintains separate dex files for each defined class.
@@ -33,16 +32,7 @@ public class MultiDexClassLoader extends ClassLoader implements ByteArrayClassLo
     }
 
     public Class<?> defineClass(String name, byte[] bytes) {
-        File f = new File(outDir, name.replaceAll("\\.", "/") + ".class");
-        if(!f.exists()){
-            System.out.println("MultiDexClassLoader.define: " + name);
-            try {
-                f.getParentFile().mkdirs();
-                Files.write(f.toPath(), bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        ClassWriter.write(name, bytes);
         return super.defineClass(name, bytes, 0, bytes.length);
     }
 
@@ -59,10 +49,4 @@ public class MultiDexClassLoader extends ClassLoader implements ByteArrayClassLo
         System.arraycopy(b, start, newBytes, 0, len);
         return defineClass(className, newBytes);
     }
-
-    public static void setOutDir(File outDir){
-        MultiDexClassLoader.outDir = outDir;
-    }
-
-    private static File outDir = new File("");
 }

@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.drools.android.DexPackageClassLoader;
-import org.drools.android.MultiDexClassLoader;
 import org.drools.core.util.DroolsStreamUtils;
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
@@ -25,8 +23,7 @@ public class Compile {
 	public static void main(String[] args) throws Throwable{
 		try(InputStream is = Compile.class.getResourceAsStream("/rule.drl")){
 			File outDir = new File("out");
-			MultiDexClassLoader.setOutDir(outDir);
-			DexPackageClassLoader.setOutDir(outDir);
+			ClassWriter.setOutDir(outDir);
 
 			KieServices kieServices = KieServices.Factory.get();
 			KieFileSystem kfs = kieServices.newKieFileSystem().write(
@@ -56,6 +53,11 @@ public class Compile {
 			System.out.println("Compilation completed. Run following commands:");
 			System.out.println("cd out; jar cf rules.jar defaultpkg; "
 					+ "cp rules.jar ../../ios-sample/lib/; cp KiePackages.cache ../../ios-sample/resources/");
+			System.out.println();
+			System.out.println("and add following lines to robovm.xml of ios-sample project.");
+			for(String s : ClassWriter.getGeneratedClasses()){
+				System.out.println("\t\t<pattern>" + s + "</pattern>");
+			}
 		}
 	}
 }

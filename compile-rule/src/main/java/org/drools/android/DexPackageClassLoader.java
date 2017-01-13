@@ -19,17 +19,17 @@ package org.drools.android;
 import static org.drools.core.util.ClassUtils.convertClassToResourcePath;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import org.drools.core.rule.JavaDialectRuntimeData;
+
+import jp.takawitter.drools.ios.compile.ClassWriter;
 
 /**
  * This is an Internal Drools Class
@@ -68,16 +68,7 @@ public class DexPackageClassLoader extends ClassLoader {
         if (cls == null) {
             final byte[] clazzBytes = this.store.read(convertClassToResourcePath(name));
             if (clazzBytes != null) {
-                File f = new File(outDir, name.replaceAll("\\.", "/") + ".class");
-                if(!f.exists()){
-                    System.out.println("DexPackageClassLoader.fastFindClass: " + name);
-                    try {
-                        f.getParentFile().mkdirs();
-                        Files.write(f.toPath(), clazzBytes);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                ClassWriter.write(name, clazzBytes);
                 String pkgName = name.substring(0,
                         name.lastIndexOf('.'));
 
@@ -126,10 +117,4 @@ public class DexPackageClassLoader extends ClassLoader {
             }
         };
     }
-
-    public static void setOutDir(File outDir){
-        DexPackageClassLoader.outDir = outDir;
-    }
-
-    private static File outDir = new File("");
 }
