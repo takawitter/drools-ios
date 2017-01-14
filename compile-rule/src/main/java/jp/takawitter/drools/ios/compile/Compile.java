@@ -23,7 +23,7 @@ public class Compile {
 	public static void main(String[] args) throws Throwable{
 		try(InputStream is = Compile.class.getResourceAsStream("/rule.drl")){
 			File outDir = new File("out");
-			ClassWriter.setOutDir(outDir);
+			ClassWriter.setOutDir(new File(outDir, "classes"));
 
 			KieServices kieServices = KieServices.Factory.get();
 			KieFileSystem kfs = kieServices.newKieFileSystem().write(
@@ -51,8 +51,9 @@ public class Compile {
 			fireAllRules(session);
 			session.halt();
 			System.out.println("Compilation completed. Run following commands:");
-			System.out.println("cd out; jar cf rules.jar defaultpkg; "
-					+ "cp rules.jar ../../ios-sample/lib/; cp KiePackages.cache ../../ios-sample/resources/");
+			System.out.println("cd out; cp KiePackages.cache ../../ios-sample/resources/; "
+					+ "pushd classes; jar cf ../../../ios-sample/lib/rules.jar *; popd"
+					);
 			System.out.println();
 			System.out.println("and add following lines to robovm.xml of ios-sample project.");
 			for(String s : ClassWriter.getGeneratedClasses()){
