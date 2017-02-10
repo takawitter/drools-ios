@@ -15,12 +15,15 @@ import org.kie.api.builder.Results;
 import org.kie.api.runtime.KieSession;
 
 public class Compile {
-	private static void fireAllRules(KieSession session){
+	protected void fireAllRules(KieSession session){
 		session.insert("world");
-		session.fireAllRules();
 	}
 
 	public static void main(String[] args) throws Throwable{
+		go(new Compile());
+	}
+
+	protected static void go(Compile c) throws Throwable{
 		try(InputStream is = Compile.class.getResourceAsStream("/rule.drl")){
 			File outDir = new File("out");
 			ClassWriter.setOutDir(new File(outDir, "classes"));
@@ -48,7 +51,8 @@ public class Compile {
 			}
 
 			KieSession session = base.newKieSession();
-			fireAllRules(session);
+			c.fireAllRules(session);
+			session.fireAllRules();
 			session.halt();
 			System.out.println("Compilation completed. Run following commands:");
 			System.out.println("cd out; cp KiePackages.cache ../../ios-sample/resources/; "
